@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>index</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>랜덤 당첨기</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      color: #64baaa;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #64baaa;
+      min-height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>랜덤 당첨기 🎉</h1>
+  <button id="drawButton" onclick="drawWinner()">추첨하기</button>
+  <div class="result" id="result">🤞</div>
+
+  <script>
+    const candidates = ['SECT 검사', 'DT 검사', 'DT 간이 검사'];
+    let hasDrawn = false;
+
+    function drawWinner() {
+      if (hasDrawn) return;
+
+      const resultDiv = document.getElementById('result');
+      const drawButton = document.getElementById('drawButton');
+      let count = 0;
+      let maxCount = 30;
+      let intervalTime = 100;
+
+      const interval = setInterval(() => {
+        const randomIndex = Math.floor(Math.random() * candidates.length);
+        resultDiv.textContent = candidates[randomIndex];
+        count++;
+        intervalTime += 20;
+
+        if (count >= maxCount) {
+          clearInterval(interval);
+
+          const finalIndex = Math.floor(Math.random() * candidates.length);
+          const winner = candidates[finalIndex];
+          let message = '';
+
+          if (winner === 'SECT 검사') {
+            message = '🧪 정밀한 선택!';
+          } else if (winner === 'DT 검사') {
+            message = '🔍 꼼꼼한 검사!';
+          } else if (winner === 'DT 간이 검사') {
+            message = '⚡ 빠르고 간편!';
+          }
+
+          resultDiv.textContent = `${winner} 당첨! ${message}`;
+          drawButton.disabled = true;
+          hasDrawn = true;
+        }
+      }, intervalTime);
+    }
+  </script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
